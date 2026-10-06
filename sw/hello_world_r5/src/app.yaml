@@ -1,0 +1,4 @@
+domain_path: /home/chris/test-xilinx-zynq-ultrascale-plus/sw/platform/export/platform/sw/standalone_psu_cortexr5_0
+app_src_dir: /home/chris/opt/Xilinx/2025.2/Vitis/data/embeddedsw/lib/sw_apps/hello_world
+template: hello_world
+lang: c

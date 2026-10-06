@@ -1,0 +1,9 @@
+#ifndef XMEM_CONFIG_H_
+#define XMEM_CONFIG_H_
+
+#define XPAR_PSU_DDR_0_BASEADDRESS 0x0
+#define XPAR_PSU_DDR_0_HIGHADDRESS 0x7fffffff
+#define XPAR_PSU_OCM_0_BASEADDRESS 0xfffc0000
+#define XPAR_PSU_OCM_0_HIGHADDRESS 0xffffffff
+
+#endif
