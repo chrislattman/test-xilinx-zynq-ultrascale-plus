@@ -1,0 +1,8 @@
+//arch = zynqmp; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader, destination_cpu = a53-0]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/platform/export/platform/sw/boot/fsbl.elf
+	[destination_device = pl]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_a53/_ide/bitstream/design_1_wrapper.bit
+	[destination_cpu = a53-0, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_a53/build/hello_world_a53.elf
+	[destination_cpu = r5-lockstep, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_r5/build/hello_world_r5.elf
+}

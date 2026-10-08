@@ -31,6 +31,7 @@ int main()
         sleep(1);
         print("Hello from Cortex-A53#0\n\r");
     }
+
     cleanup_platform();
     return 0;
 }

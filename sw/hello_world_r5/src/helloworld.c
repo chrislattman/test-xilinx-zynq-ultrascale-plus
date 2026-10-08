@@ -31,6 +31,7 @@ int main()
         sleep(2);
         print("Hello from Cortex-R5#0\n\r");
     }
-    cleanup_platform();
+    
+    // cleanup_platform();
     return 0;
 }
