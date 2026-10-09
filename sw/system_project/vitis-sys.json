@@ -1,0 +1,30 @@
+{
+  "modelVersion": "1.0",
+  "projectName": "system_project",
+  "platform": "platform",
+  "externalComponentRefs": [
+    "hello_world_r5",
+    "hello_world_a53"
+  ],
+  "components": [],
+  "buildConfigurations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "supportedTargets": [
+        "HW_EMU",
+        "HW"
+      ]
+    }
+  ],
+  "activeBuildConfigId": "default",
+  "prePackageCommand": "",
+  "postPackageCommand": "",
+  "preLinkerCommand": "",
+  "postLinkerCommand": "",
+  "hostMode": "x86",
+  "isDirty": true,
+  "applicationFlow": "EMBEDDED",
+  "templateFlow": "VITIS",
+  "buildOutputType": "UNKNOWN"
+}

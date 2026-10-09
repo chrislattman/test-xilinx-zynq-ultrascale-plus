@@ -1,0 +1,94 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "tcf-debug",
+			"request": "launch",
+			"name": "system_project_app_hw_1",
+			"debugType": "baremetal-zu",
+			"attachToRunningTargetOptions": {
+				"targetSetupMode": "standalone",
+				"executeScript": true,
+				"scriptPath": ""
+			},
+			"autoAttachProcessChildren": false,
+			"target": {
+				"targetConnectionId": "Local",
+				"peersIniPath": "../../_ide/.peers.ini",
+				"context": "ZUPlus"
+			},
+			"pathMap": [],
+			"targetSetup": {
+				"resetSystem": true,
+				"programDevice": true,
+				"partialBitstream": false,
+				"skipRevisionCheck": false,
+				"device": {
+					"plDevice": "Auto Detect",
+					"psDevice": "Auto Detect"
+				},
+				"enableRPUSplitMode": false,
+				"resetAPU": false,
+				"resetRPU": false,
+				"bitstreamFile": "${workspaceFolder}/system_project/_ide/bitstream/design_1_wrapper.bit",
+				"zuInitialization": {
+					"isFsbl": true,
+					"usingFSBL": {
+						"initWithFSBL": true,
+						"fsblFile": "${workspaceFolder}/platform/export/platform/sw/boot/fsbl.elf",
+						"fsblExitSymbol": "XFsbl_Exit"
+					},
+					"usingPsuInit": {
+						"runPsuInit": true,
+						"plPowerup": true,
+						"psuInitTclFile": "${workspaceFolder}/system_project/_ide/psinit/psu_init.tcl"
+					}
+				},
+				"zuTraceOptions": {
+					"isSelected": false,
+					"scratchAddress": "0x60000",
+					"scratchSize": "0x60000",
+					"traceOutputPath": ""
+				},
+				"downloadElf": [
+					{
+						"core": "psu_cortexr5_0",
+						"resetProcessor": true,
+						"elfFile": "${workspaceFolder}/hello_world_r5/build/hello_world_r5.elf",
+						"stopAtEntry": false,
+						"isSelfRelocatingApp": false,
+						"relativeAddress": ""
+					},
+					{
+						"core": "psu_cortexa53_0",
+						"resetProcessor": true,
+						"elfFile": "${workspaceFolder}/hello_world_a53/build/hello_world_a53.elf",
+						"stopAtEntry": false,
+						"isSelfRelocatingApp": false,
+						"relativeAddress": ""
+					}
+				],
+				"crossTriggerBreakpoints": {
+					"isSelected": false,
+					"breakpoints": [
+						{
+							"crossTriggerSignalsInput": [
+								16
+							],
+							"crossTriggerSignalsOutput": [
+								0,
+								8,
+								24,
+								32,
+								40
+							],
+							"selected": true,
+							"skipOnStep": 0
+						}
+					]
+				}
+			},
+			"internalConsoleOptions": "openOnSessionStart"
+		}
+	]
+}
