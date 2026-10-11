@@ -16,22 +16,23 @@
  *   uartlite    Configurable only in HW design
  *   ps7_uart    115200 (configured by bootrom/bsp)
  */
+
 #include <sleep.h>
 #include <stdio.h>
 #include "platform.h"
 #include "xil_printf.h"
 
-
 int main()
 {
-    // init_platform();
+    init_platform();
 
+    sleep(2);
     print("Hello from Cortex-R5#0\n\r");
     while (1) {
-        sleep(2);
+        sleep(3);
         print("Hello from Cortex-R5#0\n\r");
     }
     
-    // cleanup_platform();
+    cleanup_platform();
     return 0;
 }

@@ -66,6 +66,14 @@
 						"stopAtEntry": false,
 						"isSelfRelocatingApp": false,
 						"relativeAddress": ""
+					},
+					{
+						"core": "psu_cortexa53_1",
+						"resetProcessor": true,
+						"elfFile": "${workspaceFolder}/hello_world_a53_1/build/hello_world_a53_1.elf",
+						"stopAtEntry": false,
+						"isSelfRelocatingApp": false,
+						"relativeAddress": ""
 					}
 				],
 				"crossTriggerBreakpoints": {

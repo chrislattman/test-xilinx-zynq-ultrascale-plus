@@ -105,6 +105,20 @@
         "qemuArgsFile": "resources/standalone_psu_cortexr5_0/qemu/qemu_args.txt",
         "pmcQemuArgsFile": "resources/standalone_psu_cortexr5_0/qemu/pmu_args.txt",
         "isBSPGenReq": false
+      },
+      {
+        "name": "standalone_psu_cortexa53_1",
+        "displayName": "standalone_psu_cortexa53_1",
+        "processor": "psu_cortexa53_1",
+        "cpuType": "cortex-a53",
+        "cpuInstance": "psu_cortexa53_1",
+        "os": "standalone",
+        "appTemplate": "hello_world",
+        "isBootDomain": false,
+        "qemuData": "resources/standalone_psu_cortexa53_1/qemu",
+        "qemuArgsFile": "resources/standalone_psu_cortexa53_1/qemu/qemu_args.txt",
+        "pmcQemuArgsFile": "resources/standalone_psu_cortexa53_1/qemu/pmu_args.txt",
+        "isBSPGenReq": false
       }
     ],
     "emptyToolchainConfiguration": []

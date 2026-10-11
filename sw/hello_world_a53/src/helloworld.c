@@ -16,11 +16,11 @@
  *   uartlite    Configurable only in HW design
  *   ps7_uart    115200 (configured by bootrom/bsp)
  */
+
 #include <sleep.h>
 #include <stdio.h>
 #include "platform.h"
 #include "xil_printf.h"
-
 
 int main()
 {
@@ -28,7 +28,7 @@ int main()
 
     print("Hello from Cortex-A53#0\n\r");
     while (1) {
-        sleep(1);
+        sleep(3);
         print("Hello from Cortex-A53#0\n\r");
     }
 

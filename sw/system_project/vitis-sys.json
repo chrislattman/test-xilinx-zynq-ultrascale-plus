@@ -4,7 +4,8 @@
   "platform": "platform",
   "externalComponentRefs": [
     "hello_world_r5",
-    "hello_world_a53"
+    "hello_world_a53",
+    "hello_world_a53_1"
   ],
   "components": [],
   "buildConfigurations": [

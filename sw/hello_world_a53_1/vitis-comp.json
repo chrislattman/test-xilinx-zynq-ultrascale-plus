@@ -1,0 +1,18 @@
+{
+  "name": "hello_world_a53_1",
+  "type": "HOST",
+  "platform": "platform",
+  "domain": "standalone_psu_cortexa53_1",
+  "cpuInstance": "psu_cortexa53_1",
+  "cpuType": "cortex-a53",
+  "os": "standalone",
+  "configuration": {
+    "componentType": "HOST",
+    "hostToolchainConfigurations": []
+  },
+  "domainRealName": "standalone_psu_cortexa53_1",
+  "useSysrootToolchain": false,
+  "applicationFlow": "EMBEDDED",
+  "template": "hello_world",
+  "templateFlow": "VITIS"
+}
