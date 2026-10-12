@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="All R5 Debug" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="test-xilinx-zynq-ultrascale-plus" TARGET_NAME="Vitis" CONFIG_NAME="Vitis" RUN_PATH="$PROJECT_DIR$/sw/hello_world_r5/build/hello_world_r5.elf">
+    <method v="2">
+      <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+    </method>
+  </configuration>
+</component>

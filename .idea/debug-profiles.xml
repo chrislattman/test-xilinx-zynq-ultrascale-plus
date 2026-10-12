@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Debug Profiles">
+    <debug-profiles>
+      <debug-profile>
+        <option name="id" value="4511094b-cc4d-4490-83e4-5ea064e624d6" />
+        <option name="type" value="generic-gdbserver" />
+        <option name="name" value="A53 GDB Server" />
+        <settings>
+          <device>
+            <option name="consoleEnabled" value="false" />
+            <option name="downloadType" value="Never" />
+            <option name="resetAfterLoad" value="false" />
+          </device>
+          <gdb>
+            <option name="customConnectionScript" value="set schedule-multiple off&#10;set remotetimeout 20&#10;file sw/hello_world_a53/build/hello_world_a53.elf&#10;target extended-remote localhost:3001&#10;define core1&#10;  add-inferior&#10;  inferior 2&#10;  file sw/hello_world_a53_1/build/hello_world_a53_1.elf&#10;  attach 2&#10;end&#10;define core2&#10;  add-inferior&#10;  inferior 3&#10;  file sw/hello_world_a53_2/build/hello_world_a53_2.elf&#10;  attach 3&#10;end" />
+            <option name="executable" value="/usr/bin/gdb-multiarch" />
+            <option name="gdbRemoteString" value="localhost:3001" />
+            <option name="useCustomConnectionScript" value="true" />
+          </gdb>
+          <server>
+            <option name="enabled" value="false" />
+          </server>
+        </settings>
+      </debug-profile>
+      <debug-profile>
+        <option name="id" value="77a33940-3d7e-450c-8d13-adb86177c9ad" />
+        <option name="type" value="generic-gdbserver" />
+        <option name="name" value="R5 GDB Server" />
+        <settings>
+          <device>
+            <option name="consoleEnabled" value="false" />
+            <option name="downloadType" value="Never" />
+            <option name="resetAfterLoad" value="false" />
+          </device>
+          <gdb>
+            <option name="customConnectionScript" value="set remotetimeout 20&#10;file sw/hello_world_r5/build/hello_world_r5.elf&#10;target extended-remote localhost:3000" />
+            <option name="executable" value="/usr/bin/gdb-multiarch" />
+            <option name="gdbRemoteString" value="localhost:3000" />
+            <option name="useCustomConnectionScript" value="true" />
+          </gdb>
+          <server>
+            <option name="enabled" value="false" />
+          </server>
+        </settings>
+      </debug-profile>
+    </debug-profiles>
+  </component>
+</project>
