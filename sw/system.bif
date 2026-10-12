@@ -5,5 +5,6 @@ the_ROM_image:
 	[destination_device = pl]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_a53/_ide/bitstream/design_1_wrapper.bit
 	[destination_cpu = a53-0, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_a53/build/hello_world_a53.elf
 	[destination_cpu = a53-1, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_a53_1/build/hello_world_a53_1.elf
-	[destination_cpu = r5-lockstep, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_r5/build/hello_world_r5.elf
+	[destination_cpu = a53-2, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_a53_2/build/hello_world_a53_2.elf
+	[destination_cpu = r5-lockstep]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/hello_world_r5/build/hello_world_r5.elf
 }

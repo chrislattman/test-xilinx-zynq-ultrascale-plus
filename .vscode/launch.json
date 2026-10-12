@@ -1,0 +1,64 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Core A53#0 + A53#1 + A53#2 Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/sw/hello_world_a53/build/hello_world_a53.elf",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb-multiarch",
+            "miDebuggerArgs": "-q",
+            "targetArchitecture": "arm64",
+            "customLaunchSetupCommands": [
+                { "text": "set schedule-multiple off" },
+                { "text": "set remotetimeout 20" },
+                { "text": "file ${workspaceRoot}/sw/hello_world_a53/build/hello_world_a53.elf" },
+                { "text": "target extended-remote localhost:3001" },
+                { "text": "add-inferior" },
+                { "text": "inferior 2" },
+                { "text": "file ${workspaceRoot}/sw/hello_world_a53_1/build/hello_world_a53_1.elf" },
+                { "text": "python gdb.execute('attach 2')" },
+                { "text": "add-inferior" },
+                { "text": "inferior 3" },
+                { "text": "file ${workspaceRoot}/sw/hello_world_a53_2/build/hello_world_a53_2.elf" },
+                { "text": "python gdb.execute('attach 3')" },
+                { "text": "source ${workspaceRoot}/.vscode/a53_cores.gdb" },
+                { "text": "inferior 1" }
+            ],
+            "launchCompleteCommand": "None"
+        },
+        {
+            "name": "Core R5 Lockstep Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/sw/hello_world_r5/build/hello_world_r5.elf",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb-multiarch",
+            "miDebuggerArgs": "-q",
+            "targetArchitecture": "arm",
+            "customLaunchSetupCommands": [
+                { "text": "set remotetimeout 20" },
+                { "text": "file ${workspaceRoot}/sw/hello_world_r5/build/hello_world_r5.elf" },
+                { "text": "target extended-remote localhost:3000" }
+            ],
+            "launchCompleteCommand": "None"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "All Cores Debug",
+            "configurations": [
+                "Core A53#0 + A53#1 + A53#2 Debug",
+                "Core R5 Lockstep Debug"
+            ],
+            "stopAll": true
+        }
+    ]
+}

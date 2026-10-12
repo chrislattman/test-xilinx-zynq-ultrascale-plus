@@ -35,7 +35,7 @@ set(USER_INCLUDE_DIRECTORIES
 #Example 3: Adding ${MY_ENV}/data/helloworld.c are expanded using project-specific environment settings.
 set(USER_COMPILE_SOURCES
 "platform.c"
-"helloworld.c"
+"helloworld_a53_0.c"
 )
 
 # -----------------------------------------
@@ -64,7 +64,7 @@ set(USER_COMPILE_WARNINGS_INHIBIT_ALL )
 # -----------------------------------------
 
 # Optimization level   "-O0" [None], "-O1" [Optimize] , "-O2" [Optimize More], "-O3" [Optimize Most] or "-Os" [Optimize Size]
-set(USER_COMPILE_OPTIMIZATION_LEVEL -O0)
+set(USER_COMPILE_OPTIMIZATION_LEVEL "-O0")
 
 # Other flags related to optimization
 set(USER_COMPILE_OPTIMIZATION_OTHER_FLAGS )
@@ -72,7 +72,7 @@ set(USER_COMPILE_OPTIMIZATION_OTHER_FLAGS )
 # -----------------------------------------
 
 # Debug level "" [None], "-g1" [Minimum], "g2" [Default], "g3" [Maximum]
-set(USER_COMPILE_DEBUG_LEVEL -g3)
+set(USER_COMPILE_DEBUG_LEVEL "-g3")
 
 # Other flags related to debugging
 set(USER_COMPILE_DEBUG_OTHER_FLAGS )

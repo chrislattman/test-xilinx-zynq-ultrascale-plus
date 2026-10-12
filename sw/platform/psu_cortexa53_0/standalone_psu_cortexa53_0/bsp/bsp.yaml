@@ -207,7 +207,7 @@ proc_config:
       name: proc_extra_compiler_flags
       permission: read_write
       type: string
-      value: ' -O2 -g -Wall -Wextra -fno-tree-loop-distribute-patterns'
+      value: -O2 -g -Wall -Wextra -fno-tree-loop-distribute-patterns
       default: ' -O2 -g -Wall -Wextra -fno-tree-loop-distribute-patterns'
       options: []
       description: Extra Compiler Flags used in BSP and library generation

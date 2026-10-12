@@ -102,7 +102,7 @@ os_config:
       name: standalone_stdin
       permission: read_write
       type: string
-      value: psu_uart_0
+      value: psu_uart_1
       default: psu_uart_0
       options:
       - None
@@ -114,7 +114,7 @@ os_config:
       name: standalone_stdout
       permission: read_write
       type: string
-      value: psu_uart_0
+      value: psu_uart_1
       default: psu_uart_0
       options:
       - None
@@ -207,7 +207,7 @@ proc_config:
       name: proc_extra_compiler_flags
       permission: read_write
       type: string
-      value: ' -O2 -g -Wall -Wextra -fno-tree-loop-distribute-patterns -DUSE_AMP=1'
+      value: -O2 -g -Wall -Wextra -fno-tree-loop-distribute-patterns -DUSE_AMP=1
       default: ' -O2 -g -Wall -Wextra -fno-tree-loop-distribute-patterns'
       options: []
       description: Extra Compiler Flags used in BSP and library generation
