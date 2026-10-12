@@ -11,7 +11,7 @@ enable_language(C ASM CXX)
 # Add any compiler definitions, they will be added as extra definitions
 # Example : Adding VERBOSE=1 will pass -DVERBOSE=1 to the compiler.
 set(USER_COMPILE_DEFINITIONS
-"USE_AMP=1"
+""
 )
 
 # Undefine any previously specified compiler definitions, either built in or provided with a -D option

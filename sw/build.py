@@ -8,15 +8,16 @@ args = parser.parse_args()
 if args.release:
     release_mode = True
 
-# A53#0 initializes the GIC distributor shared by the APU cores, so the other
-# A53s need USE_AMP. The R5 has its own GIC and doesn't.
+# A53#0 initializes the GIC distributor shared by the APU cores. A53#1-3 share
+# one USE_AMP domain so they leave the distributor alone. The ELF isn't tied to
+# a core (boot code reads MPIDR), so the debugger's download target decides
+# which core runs it. The R5 has its own GIC and doesn't need USE_AMP.
 bsp_flags = "-O2 -Wall -Wextra -fno-tree-loop-distribute-patterns"
 if not release_mode:
     bsp_flags = "-O2 -g -Wall -Wextra -fno-tree-loop-distribute-patterns"
 domains = {
     "standalone_psu_cortexa53_0": bsp_flags,
-    "standalone_psu_cortexa53_1": bsp_flags + " -DUSE_AMP=1",
-    "standalone_psu_cortexa53_2": bsp_flags + " -DUSE_AMP=1",
+    "standalone_a53_amp": bsp_flags + " -DUSE_AMP=1",
     "standalone_psu_cortexr5_0": bsp_flags,
 }
 
