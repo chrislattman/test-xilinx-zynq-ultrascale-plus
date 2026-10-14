@@ -44,4 +44,5 @@ dow ./sw/hello_world_a53_1/build/hello_world_a53_1.elf
 targets -set -nocase -filter {name =~ "*A53*#2" && jtag_cable_name =~ "Avnet USB-to-JTAG/UART Pod V1 1234-oj1A" && jtag_device_ctx=="jsn-USB-to-JTAG/UART Pod V1-1234-oj1A-5ba00477-0"}
 rst -processor
 dow ./sw/hello_world_a53_2/build/hello_world_a53_2.elf
+# bpadd -ct-input {16} -ct-output {0 8 24 32 40} -skip-on-step 0 -target-id all
 configparams force-mem-access 0
