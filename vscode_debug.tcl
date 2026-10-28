@@ -1,6 +1,6 @@
 connect
 bpremove -all
-targets 8
+targets -set -nocase -filter {name =~"PSU*" && jtag_cable_name =~ "Avnet USB-to-JTAG/UART Pod V1 1234-oj1A" && jtag_device_ctx=="jsn-USB-to-JTAG/UART Pod V1-1234-oj1A-5ba00477-0"}
 rst
 after 3000
 
