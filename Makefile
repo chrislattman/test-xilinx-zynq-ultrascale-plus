@@ -19,12 +19,14 @@ QEMU        ?= qemu-system-aarch64
 CROSS32     ?= arm-none-eabi-
 READELF     ?= readelf
 TELNET_PORT ?= 5678
+XSDB 		?= xsdb
 
 ELF_A53_0 := sw/hello_world_a53/build/hello_world_a53.elf
 ELF_A53_1 := sw/hello_world_a53_1/build/hello_world_a53_1.elf
 ELF_A53_2 := sw/hello_world_a53_2/build/hello_world_a53_2.elf
 ELF_R5    := sw/hello_world_r5/build/hello_world_r5.elf
 BOOT      := build/qemu/boot.elf
+FIND_FILTER	:= $(XSDB) find_jtag_filters.tcl
 
 entry = $$($(READELF) -h $(1) | awk '/Entry point/ {print $$4}')
 
@@ -99,3 +101,15 @@ $(BOOT): qemu/boot.S $(ELF_A53_0) $(ELF_A53_1) $(ELF_A53_2) $(ELF_R5)
 
 $(ELF_A53_0) $(ELF_A53_1) $(ELF_A53_2) $(ELF_R5):
 	$(error $@ not found; build the applications in Vitis first)
+
+# Zynq UltraScale+ (xczu3): GDB ports 3000 (R5) / 3001 (A53)
+# Zynq 7000 (xc7z020):      GDB port  3100 (A9)
+# Both filters are looked up before either hw_server starts, since a cable
+# claimed by a running hw_server may not be visible to the lookup.
+run-both-hw-servers:
+	zynqmp=$$($(FIND_FILTER) --zynqmp) && zynq=$$($(FIND_FILTER) --zynq) && \
+	{ hw_server -s tcp:127.0.0.1:3121 -p 3000 -e "set jtag-port-filter $$zynqmp" & \
+	  hw_server -s tcp:127.0.0.1:3122 -p 3100 -e "set jtag-port-filter $$zynq" & }
+
+stop-both-hw-servers:
+	pkill hw_server
