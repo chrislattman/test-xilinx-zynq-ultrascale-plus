@@ -1,3 +1,10 @@
 {
-    "cmake.sourceDirectory": "${workspaceRoot}/sw/system_project"
+    "cmake.sourceDirectory": "${workspaceRoot}/sw/system_project",
+    "python.analysis.extraPaths": [
+        "/home/chris/opt/Xilinx/2025.2/Vitis/cli",
+        "/home/chris/opt/Xilinx/2025.2/Vitis/cli/python-packages/site-packages",
+        "/home/chris/opt/Xilinx/2025.2/Vitis/cli/python-packages/lnx64",
+        "/home/chris/opt/Xilinx/2025.2/Vitis/cli/proto",
+        "/home/chris/opt/Xilinx/2025.2/Vitis/scripts/python_pkg"
+    ]
 }

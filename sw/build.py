@@ -1,5 +1,7 @@
 import argparse
 import vitis
+from vitis.component import HostComponent
+from vitis.platform_component import Platform
 
 release_mode = False
 parser = argparse.ArgumentParser()
@@ -25,6 +27,8 @@ client = vitis.create_client()
 client.update_workspace(".")
 
 platform = client.get_component("platform")
+assert isinstance(platform, Platform)
+# platform.update_hw(hw_design="../fpga/design_1_wrapper.xsa")  # re-read the XSA if desired
 for domain_name, flags in domains.items():
     domain_object = platform.get_domain(domain_name)
     domain_object.set_config(option="proc", param="proc_extra_compiler_flags", value=flags)
@@ -32,6 +36,7 @@ platform.build()
 
 for app_name in ["hello_world_a53", "hello_world_a53_1", "hello_world_a53_2", "hello_world_r5"]:
     app = client.get_component(app_name)
+    assert isinstance(app, HostComponent)
     if release_mode:
         app.set_app_config(key="USER_COMPILE_DEBUG_LEVEL", values="")
         app.set_app_config(key="USER_COMPILE_OPTIMIZATION_LEVEL", values="-O2")

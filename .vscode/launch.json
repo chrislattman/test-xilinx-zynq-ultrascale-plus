@@ -51,7 +51,7 @@
             "launchCompleteCommand": "None"
         },
         {
-            "name": "QEMU A53#0 + A53#1 + A53#2 Debug",
+            "name": "QEMU All Cores Debug",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/sw/hello_world_a53/build/hello_world_a53.elf",
@@ -66,29 +66,16 @@
                 { "text": "file ${workspaceRoot}/sw/hello_world_a53/build/hello_world_a53.elf" },
                 { "text": "add-symbol-file ${workspaceRoot}/sw/hello_world_a53_1/build/hello_world_a53_1.elf" },
                 { "text": "add-symbol-file ${workspaceRoot}/sw/hello_world_a53_2/build/hello_world_a53_2.elf" },
-                { "text": "target remote localhost:1234" },
-                { "text": "set scheduler-locking step" }
-            ],
-            "launchCompleteCommand": "None"
-        },
-        {
-            "name": "QEMU R5 Debug",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceRoot}/sw/hello_world_r5/build/hello_world_r5.elf",
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb-multiarch",
-            "miDebuggerArgs": "-q",
-            "targetArchitecture": "arm",
-            "customLaunchSetupCommands": [
                 { "text": "target extended-remote localhost:1234" },
+                { "text": "set schedule-multiple on" },
+                { "text": "set scheduler-locking step" },
                 { "text": "add-inferior" },
                 { "text": "inferior 2" },
                 { "text": "file ${workspaceRoot}/sw/hello_world_r5/build/hello_world_r5.elf" },
-                { "text": "attach 2" }
+                { "text": "python gdb.execute('attach 2')" },
+                { "text": "inferior 1" },
+                { "text": "detach" },
+                { "text": "python gdb.execute('attach 1')" }
             ],
             "launchCompleteCommand": "None"
         }

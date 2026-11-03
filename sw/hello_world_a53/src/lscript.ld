@@ -12,7 +12,8 @@ _EL2_STACK_SIZE = DEFINED(_EL2_STACK_SIZE) ? _EL2_STACK_SIZE : 1024;
 
 MEMORY
 {
-	psu_ddr_0_memory_0 : ORIGIN = 0x0, LENGTH = 0x0fffffff
+	/* Starts at 256 KB, above R5#0's TCM range (0x0-0x3FFFF), so hello_world_r5 can share one QEMU instance */
+	psu_ddr_0_memory_0 : ORIGIN = 0x40000, LENGTH = 0x0ffbffff
 	psu_ocm_ram_0_memory_0 : ORIGIN = 0xfffc0000, LENGTH = 0x40000
 }
 
