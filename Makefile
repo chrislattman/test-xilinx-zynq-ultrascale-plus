@@ -12,8 +12,9 @@
 #
 # Known QEMU limitation: its TTC model has 16-bit counters (32-bit on real
 # ZynqMP), so sleep() on the R5 (which uses TTC3) returns almost immediately
-# and hello_world_r5 prints in a tight loop. The A53s use the generic timer
-# and are unaffected.
+# and hello_world_r5 posts messages in a tight loop (A53#0, which owns UART1,
+# prints up to 8 of them a second). The A53s use the generic timer and are
+# unaffected.
 
 QEMU        ?= qemu-system-aarch64
 CROSS32     ?= arm-none-eabi-

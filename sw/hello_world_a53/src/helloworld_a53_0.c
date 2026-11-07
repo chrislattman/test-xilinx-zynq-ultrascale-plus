@@ -20,16 +20,40 @@
 #include <sleep.h>
 #include <stdio.h>
 #include "platform.h"
+#include "shared_mem.h"
 #include "xil_printf.h"
+
+// A53#0 owns UART1, so it also prints the messages the other cores post to the
+// mailbox. At most MSG_SLOTS per sender per call, so a sender that posts nonstop
+// (like the R5 in QEMU, where its sleep() returns immediately) can't keep it here.
+static void print_mailbox_messages()
+{
+    char msg[MSG_LEN];
+    for (unsigned sender = 0; sender < MSG_SENDERS; sender++) {
+        for (unsigned i = 0; i < MSG_SLOTS && msg_pop(sender, msg); i++) {
+            print(msg);
+        }
+    }
+}
 
 int main()
 {
     int counter = 0;
     init_platform();
 
+    // Map the mailbox non-cacheable, clear it, then let the other cores post
+    if (mailbox_map() != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+    mailbox_init();
+
     print("Hello from Cortex-A53#0\n\r");
     while (1) {
-        sleep(4);
+        // sleep(4), checking the mailbox every second
+        for (int i = 0; i < 4; i++) {
+            sleep(1);
+            print_mailbox_messages();
+        }
         print("Hello from Cortex-A53#0\n\r");
         ++counter;
     }

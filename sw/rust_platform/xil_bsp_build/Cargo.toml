@@ -1,0 +1,12 @@
+[package]
+name = "xil-bsp-build"
+description = "build.rs helper: bindgen + shims + link setup for Vitis standalone A53/R5 BSPs"
+# Standalone (excluded from the workspace, see ../../Cargo.toml), so no `.workspace = true`
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+bindgen = { version = "0.73", features = ["experimental"] }
+cc = "1.2"

@@ -20,6 +20,7 @@
 #include <sleep.h>
 #include <stdio.h>
 #include "platform.h"
+#include "shared_mem.h"
 #include "xil_printf.h"
 
 
@@ -28,11 +29,18 @@ int main()
     int counter = 0;
     init_platform();
 
+    // A53#0 owns UART1, so messages go through the mailbox for A53#0 to print.
+    // Map it non-cacheable, then wait for A53#0 to clear it
+    if (mailbox_map() != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+    mailbox_wait_ready();
+
     sleep(2);
-    print("Hello from Cortex-A53#2\n\r");
+    msg_post(MSG_FROM_A53_2, "Hello from Cortex-A53#2\n\r");
     while (1) {
         sleep(4);
-        print("Hello from Cortex-A53#2\n\r");
+        msg_post(MSG_FROM_A53_2, "Hello from Cortex-A53#2\n\r");
         ++counter;
     }
 
