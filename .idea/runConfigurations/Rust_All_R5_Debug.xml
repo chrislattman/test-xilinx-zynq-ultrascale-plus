@@ -1,7 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Rust: All R5 Debug" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="test-xilinx-zynq-ultrascale-plus" TARGET_NAME="Vitis" CONFIG_NAME="Vitis" RUN_PATH="$PROJECT_DIR$/sw/target/armv7r-none-eabihf/debug/hello-world-r5-rs">
-    <method v="2">
-      <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-    </method>
-  </configuration>
-</component>

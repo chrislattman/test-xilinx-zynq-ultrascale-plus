@@ -78,72 +78,6 @@
                 { "text": "python gdb.execute('attach 1')" }
             ],
             "launchCompleteCommand": "None"
-        },
-        {
-            "name": "Rust: Core A53#0 + A53#1 + A53#2 Debug",
-            "type": "gdb",
-            "request": "attach",
-            "target": "extended-remote localhost:3001",
-            "executable": "${workspaceFolder}/sw/target/aarch64-unknown-none/debug/hello-world-a53-rs",
-            "cwd": "${workspaceFolder}",
-            "gdbpath": "${userHome}/.cargo/bin/rust-gdb",
-            "env": {
-                "RUST_GDB": "gdb-multiarch"
-            },
-            "stopAtConnect": true,
-            "debugger_args": ["-iex", "set remotetimeout 20", "-iex", "python import gdb_load_rust_pretty_printers"],
-            "autorun": [
-                "set schedule-multiple off",
-                "add-inferior",
-                "inferior 2",
-                "file ${workspaceFolder}/sw/target/aarch64-unknown-none/debug/hello-world-a53-1-rs",
-                "python gdb.execute('attach 2')",
-                "add-inferior",
-                "inferior 3",
-                "file ${workspaceFolder}/sw/target/aarch64-unknown-none/debug/hello-world-a53-2-rs",
-                "python gdb.execute('attach 3')",
-                "source ${workspaceFolder}/.vscode/a53_cores.gdb",
-                "inferior 1"
-            ]
-        },
-        {
-            "name": "Rust: Core R5 Lockstep Debug",
-            "type": "gdb",
-            "request": "attach",
-            "target": "extended-remote localhost:3000",
-            "executable": "${workspaceFolder}/sw/target/armv7r-none-eabihf/debug/hello-world-r5-rs",
-            "cwd": "${workspaceFolder}",
-            "gdbpath": "${userHome}/.cargo/bin/rust-gdb",
-            "env": {
-                "RUST_GDB": "gdb-multiarch"
-            },
-            "stopAtConnect": true,
-            "debugger_args": ["-iex", "set remotetimeout 20", "-iex", "python import gdb_load_rust_pretty_printers"]
-        },
-        {
-            "name": "Rust: QEMU All Cores Debug",
-            "type": "gdb",
-            "request": "attach",
-            "target": "extended-remote localhost:1234",
-            "executable": "${workspaceFolder}/sw/target/aarch64-unknown-none/debug/hello-world-a53-rs",
-            "cwd": "${workspaceFolder}",
-            "gdbpath": "${userHome}/.cargo/bin/rust-gdb",
-            "env": {
-                "RUST_GDB": "gdb-multiarch"
-            },
-            "stopAtConnect": true,
-            "debugger_args": ["-iex", "python import gdb_load_rust_pretty_printers"],
-            "autorun": [
-                "add-symbol-file ${workspaceFolder}/sw/target/aarch64-unknown-none/debug/hello-world-a53-1-rs",
-                "add-symbol-file ${workspaceFolder}/sw/target/aarch64-unknown-none/debug/hello-world-a53-2-rs",
-                "set schedule-multiple on",
-                "set scheduler-locking step",
-                "add-inferior",
-                "inferior 2",
-                "file ${workspaceFolder}/sw/target/armv7r-none-eabihf/debug/hello-world-r5-rs",
-                "python gdb.execute('attach 2')",
-                "inferior 1"
-            ]
         }
     ],
     "compounds": [
@@ -152,14 +86,6 @@
             "configurations": [
                 "Core A53#0 + A53#1 + A53#2 Debug",
                 "Core R5 Lockstep Debug"
-            ],
-            "stopAll": true
-        },
-        {
-            "name": "Rust: All Cores Debug",
-            "configurations": [
-                "Rust: Core A53#0 + A53#1 + A53#2 Debug",
-                "Rust: Core R5 Lockstep Debug"
             ],
             "stopAll": true
         }

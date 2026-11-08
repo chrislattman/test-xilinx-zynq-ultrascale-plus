@@ -32,5 +32,3 @@ _ide/*
 compile_commands.json
 .hash-map.txt
 .buildstatus
-# Rust
-/target

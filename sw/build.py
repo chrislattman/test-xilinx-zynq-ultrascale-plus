@@ -6,7 +6,6 @@ from vitis.platform_component import Platform
 release_mode = False
 parser = argparse.ArgumentParser()
 parser.add_argument("--release", action="store_true")
-parser.add_argument("--no-apps", action="store_true", help="only build the platform (BSPs, FSBL, and PMUFW)")
 args = parser.parse_args()
 if args.release:
     release_mode = True
@@ -35,16 +34,15 @@ for domain_name, flags in domains.items():
     domain_object.set_config(option="proc", param="proc_extra_compiler_flags", value=flags)
 platform.build()
 
-if not args.no_apps:
-    for app_name in ["hello_world_a53", "hello_world_a53_1", "hello_world_a53_2", "hello_world_r5"]:
-        app = client.get_component(app_name)
-        assert isinstance(app, HostComponent)
-        if release_mode:
-            app.set_app_config(key="USER_COMPILE_DEBUG_LEVEL", values="")
-            app.set_app_config(key="USER_COMPILE_OPTIMIZATION_LEVEL", values="-O2")
-        else:
-            app.set_app_config(key="USER_COMPILE_DEBUG_LEVEL", values="-g3")
-            app.set_app_config(key="USER_COMPILE_OPTIMIZATION_LEVEL", values="-O0")
-        app.build()
+for app_name in ["hello_world_a53", "hello_world_a53_1", "hello_world_a53_2", "hello_world_r5"]:
+    app = client.get_component(app_name)
+    assert isinstance(app, HostComponent)
+    if release_mode:
+        app.set_app_config(key="USER_COMPILE_DEBUG_LEVEL", values="")
+        app.set_app_config(key="USER_COMPILE_OPTIMIZATION_LEVEL", values="-O2")
+    else:
+        app.set_app_config(key="USER_COMPILE_DEBUG_LEVEL", values="-g3")
+        app.set_app_config(key="USER_COMPILE_OPTIMIZATION_LEVEL", values="-O0")
+    app.build()
 
 vitis.dispose()

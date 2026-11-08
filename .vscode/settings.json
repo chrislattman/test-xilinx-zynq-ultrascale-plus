@@ -6,9 +6,5 @@
         "/home/chris/opt/Xilinx/2025.2/Vitis/cli/python-packages/lnx64",
         "/home/chris/opt/Xilinx/2025.2/Vitis/cli/proto",
         "/home/chris/opt/Xilinx/2025.2/Vitis/scripts/python_pkg"
-    ],
-    "rust-analyzer.cargo.extraEnv": {
-        "XILINX_VITIS": "/home/chris/opt/Xilinx/2025.2/Vitis"
-    },
-    "rust-analyzer.cargo.target": "aarch64-unknown-none"
+    ]
 }
