@@ -29,6 +29,10 @@ int main()
     int counter = 0;
     init_platform();
 
+    // Fault on any access from this core to A53#0's and A53#1's private DDR
+    // (see shared_mem.h for the memory map)
+    unmap_blocks(A53_0_PRIVATE_BASE, A53_1_PRIVATE_END);
+
     // A53#0 owns UART1, so messages go through the mailbox for A53#0 to print.
     // Map it non-cacheable, then wait for A53#0 to clear it
     if (mailbox_map() != XST_SUCCESS) {

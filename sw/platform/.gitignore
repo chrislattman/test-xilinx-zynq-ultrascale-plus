@@ -32,3 +32,5 @@ _ide/*
 compile_commands.json
 .hash-map.txt
 .buildstatus
+# BSP headers, regenerated into include/ on every BSP build (libsrc/ headers are sources and stay tracked)
+**/*bsp/include/*.h

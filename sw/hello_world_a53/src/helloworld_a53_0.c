@@ -41,6 +41,10 @@ int main()
     int counter = 0;
     init_platform();
 
+    // Fault on any access from this core to A53#1's and A53#2's private DDR
+    // (see shared_mem.h for the memory map)
+    unmap_blocks(A53_1_PRIVATE_BASE, A53_2_PRIVATE_END);
+
     // Map the mailbox non-cacheable, clear it, then let the other cores post
     if (mailbox_map() != XST_SUCCESS) {
         return XST_FAILURE;

@@ -19,6 +19,15 @@
  * isn't something to rely on for uncached memory shared with the R5).
  *
  * Only fixed-width fields: the A53s are 64-bit and the R5 is 32-bit.
+ *
+ * Each core also makes the other cores' private DDR inaccessible to itself,
+ * so a stray access raises a data abort instead of corrupting another core
+ * (the debugger and DMA masters bypass the MMU/MPU and are not affected):
+ *   - each A53 unmaps the other A53s' regions in its MMU (unmap_blocks())
+ *   - R5#0 blocks all three A53 regions in its MPU (unmap_a53_ddr())
+ * The A53 regions are 2 MB block aligned. A53#0's starts at 0x0 rather than
+ * 0x40000 because 0x0 - 0x3FFFF shares a block with it (that's where QEMU
+ * loads hello_world_r5, see sw/README.md).
  */
 
 #ifndef SHARED_MEM_H
@@ -35,6 +44,18 @@
 #else
 #include <xil_mmu.h>
 #endif
+
+/* Private DDR regions, [BASE, END) */
+#define A53_0_PRIVATE_BASE  0x00000000U
+#define A53_0_PRIVATE_END   0x10000000U
+#define A53_1_PRIVATE_BASE  0x10000000U
+#define A53_1_PRIVATE_END   0x20000000U
+#define A53_2_PRIVATE_BASE  0x20000000U
+#define A53_2_PRIVATE_END   0x30000000U
+
+/* R5#0's TCM, at 0x0 in its own address map (ATCM + BTCM, split or lockstep) */
+#define R5_TCM_BASE         0x00000000U
+#define R5_TCM_SIZE         0x40000U
 
 #define MAILBOX_BASE        0x30000000U
 #define MAILBOX_SIZE        0x200000U
@@ -78,6 +99,49 @@ static inline int mailbox_map(void)
     return XST_SUCCESS;
 #endif
 }
+
+#ifdef ARMR5
+/*
+ * R5#0 only: no access to the A53s' private DDR (0x0 - 0x2FFFFFFF).
+ *
+ * The BSP's MPU region 0 maps 0x0 - 0x7FFFFFFF (TCM and DDR) and Init_MPU()
+ * uses regions 0-9, and mailbox_map() takes the next free one. The R5 checks
+ * TCM accesses against the MPU too, and the no-access regions start at 0x0,
+ * so region 15 (the highest number wins where regions overlap) first keeps
+ * the TCM accessible with the BSP's attributes. It must be set before the
+ * no-access regions, since this code and its stack run from TCM.
+ */
+static inline int unmap_a53_ddr(void)
+{
+    u32 status = Xil_SetMPURegionByRegNum(15U, R5_TCM_BASE, R5_TCM_SIZE,
+                                          NORM_NSHARED_WB_WA | PRIV_RW_USER_RW);
+    if (status != XST_SUCCESS) {
+        return (int)status;
+    }
+    /* MPU regions are power-of-two sized and aligned: 512 MB + 256 MB */
+    status = Xil_SetMPURegionByRegNum(13U, A53_0_PRIVATE_BASE, A53_2_PRIVATE_BASE - A53_0_PRIVATE_BASE,
+                                      NO_ACCESS | EXECUTE_NEVER);
+    if (status != XST_SUCCESS) {
+        return (int)status;
+    }
+    return (int)Xil_SetMPURegionByRegNum(14U, A53_2_PRIVATE_BASE, A53_2_PRIVATE_END - A53_2_PRIVATE_BASE,
+                                         NO_ACCESS | EXECUTE_NEVER);
+}
+#else
+#define A53_BLOCK_SIZE      0x200000U
+
+/*
+ * A53s only: marks [base, end) as invalid (RESERVED, an invalid descriptor)
+ * in this core's MMU table, one 2 MB block at a time, so any access from this
+ * core raises a synchronous abort. Each A53 application has its own table.
+ */
+static inline void unmap_blocks(UINTPTR base, UINTPTR end)
+{
+    for (UINTPTR addr = base; addr < end; addr += A53_BLOCK_SIZE) {
+        Xil_SetTlbAttributes(addr, RESERVED);
+    }
+}
+#endif
 
 /* A53#0 only: clear the rings (DDR holds random values at power-up), then
  * let the senders start */

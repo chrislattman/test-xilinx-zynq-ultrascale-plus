@@ -28,6 +28,12 @@ int main()
     int counter = 0;
     init_platform();
 
+    // Fault on any access from this core to the A53s' private DDR (its own
+    // TCM stays accessible, see shared_mem.h for the memory map)
+    if (unmap_a53_ddr() != XST_SUCCESS) {
+        return XST_FAILURE;
+    }
+
     // A53#0 owns UART1, so messages go through the mailbox for A53#0 to print.
     // Map it non-cacheable, then wait for A53#0 to clear it
     if (mailbox_map() != XST_SUCCESS) {
