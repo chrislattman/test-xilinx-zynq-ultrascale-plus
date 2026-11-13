@@ -1,0 +1,29 @@
+# Two architectures, so there is no [build] target: stable Cargo can't pin a
+# package to a target (that's the nightly-only `forced-target`). Build each
+# architecture with its alias below. Source Vitis settings64.sh first so Xilinx's
+# aarch64-none-elf-gcc and armr5-none-eabi-gcc are on PATH.
+
+[alias]
+# Each builds that architecture's apps (and the BSP crates they use). Add new
+# A53/R5 packages here; extra args like --release pass through
+build-a53 = ["build", "--target", "aarch64-unknown-none", "-p", "hello-world-a53-rs", "-p", "hello-world-a53-1-rs", "-p", "hello-world-a53-2-rs"]
+build-r5 = ["build", "--target", "armv7r-none-eabihf", "-p", "hello-world-r5-rs"]
+clippy-a53 = ["clippy", "--target", "aarch64-unknown-none", "-p", "shared-mem", "-p", "xil-a53-0-sys", "-p", "xil-a53-amp-sys", "-p", "hello-world-a53-rs", "-p", "hello-world-a53-1-rs", "-p", "hello-world-a53-2-rs"]
+clippy-r5 = ["clippy", "--target", "armv7r-none-eabihf", "-p", "shared-mem", "-p", "xil-r5-0-sys", "-p", "hello-world-r5-rs"]
+
+# Cortex-A53 (A53#0 and the A53#1/#2 AMP domain). The BSPs use the compiler's
+# defaults (no -mcpu), so no extra link args are needed for multilib selection.
+[target.aarch64-unknown-none]
+linker = "aarch64-none-elf-gcc"
+rustflags = ["-C", "target-cpu=cortex-a53"]
+
+# Cortex-R5F (C side: -mcpu=cortex-r5 -mfloat-abi=hard -mfpu=vfpv3-d16). The link
+# args make GCC pick the matching libgcc/newlib multilib.
+[target.armv7r-none-eabihf]
+linker = "armr5-none-eabi-gcc"
+rustflags = [
+    "-C", "target-cpu=cortex-r5",
+    "-C", "link-arg=-mcpu=cortex-r5",
+    "-C", "link-arg=-mfloat-abi=hard",
+    "-C", "link-arg=-mfpu=vfpv3-d16",
+]

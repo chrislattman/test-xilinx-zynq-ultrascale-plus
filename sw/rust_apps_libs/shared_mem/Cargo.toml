@@ -1,0 +1,13 @@
+[package]
+name = "shared-mem"
+description = "Mailbox from A53#1, A53#2 and R5#0 to A53#0 (Rust version of shared_mem/shared_mem.h)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+# no_std: no test/bench harness or doctests on the target (keeps `--all-targets` working)
+[lib]
+test = false
+doctest = false
+bench = false

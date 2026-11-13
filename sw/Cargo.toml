@@ -1,0 +1,31 @@
+[workspace]
+resolver = "3"
+members = [
+    "rust_platform/xil_a53_0_sys",
+    "rust_platform/xil_a53_amp_sys",
+    "rust_platform/xil_r5_0_sys",
+    "rust_apps_libs/shared_mem",
+    "rust_apps_libs/hello_world_a53_rs",
+    "rust_apps_libs/hello_world_a53_1_rs",
+    "rust_apps_libs/hello_world_a53_2_rs",
+    "rust_apps_libs/hello_world_r5_rs",
+]
+# xil-bsp-build is a host-side build-dependency (it needs std). Excluding it keeps
+# `cargo check --workspace --target ...` (what rust-analyzer runs) from building it
+# for an A53/R5 target; it is still built for the host as a path build-dependency.
+# The members build for the A53 or R5 target; there is no default target, so use
+# the aliases in .cargo/config.toml (cargo build-a53 / cargo build-r5)
+exclude = ["rust_platform/xil_bsp_build"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[workspace.dependencies]
+xil-bsp-build = { path = "rust_platform/xil_bsp_build" }
+xil-a53-0-sys = { path = "rust_platform/xil_a53_0_sys" }
+xil-a53-amp-sys = { path = "rust_platform/xil_a53_amp_sys" }
+xil-r5-0-sys = { path = "rust_platform/xil_r5_0_sys" }
+shared-mem = { path = "rust_apps_libs/shared_mem" }

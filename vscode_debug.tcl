@@ -1,3 +1,18 @@
+# "xsdb vscode_debug.tcl rust" loads the Rust applications (sw/rust_apps_libs,
+# debug build) instead of the C ones; use the "Rust: ..." launch configurations then.
+# Combine with "split" as needed, e.g. "xsdb vscode_debug.tcl rust split".
+if {[info exists argv] && [lsearch -exact $argv rust] >= 0} {
+    set elf_a53_0 ./sw/target/aarch64-unknown-none/debug/hello-world-a53-rs
+    set elf_a53_1 ./sw/target/aarch64-unknown-none/debug/hello-world-a53-1-rs
+    set elf_a53_2 ./sw/target/aarch64-unknown-none/debug/hello-world-a53-2-rs
+    set elf_r5    ./sw/target/armv7r-none-eabihf/debug/hello-world-r5-rs
+} else {
+    set elf_a53_0 ./sw/hello_world_a53/build/hello_world_a53.elf
+    set elf_a53_1 ./sw/hello_world_a53_1/build/hello_world_a53_1.elf
+    set elf_a53_2 ./sw/hello_world_a53_2/build/hello_world_a53_2.elf
+    set elf_r5    ./sw/hello_world_r5/build/hello_world_r5.elf
+}
+
 connect
 bpremove -all
 targets -set -nocase -filter {name =~"PSU*" && jtag_cable_name =~ "Avnet USB-to-JTAG/UART Pod V1 1234-oj1A" && jtag_device_ctx=="jsn-USB-to-JTAG/UART Pod V1-1234-oj1A-5ba00477-0"}
@@ -42,19 +57,19 @@ if {[lsearch -exact $argv split] >= 0} {
 } else {
     mwr -force 0x0 0 0x10000
 }
-dow ./sw/hello_world_r5/build/hello_world_r5.elf
+dow $elf_r5
 
 targets -set -nocase -filter {name =~ "*A53*#0" && jtag_cable_name =~ "Avnet USB-to-JTAG/UART Pod V1 1234-oj1A" && jtag_device_ctx=="jsn-USB-to-JTAG/UART Pod V1-1234-oj1A-5ba00477-0"}
 rst -processor
-dow ./sw/hello_world_a53/build/hello_world_a53.elf
+dow $elf_a53_0
 
 targets -set -nocase -filter {name =~ "*A53*#1" && jtag_cable_name =~ "Avnet USB-to-JTAG/UART Pod V1 1234-oj1A" && jtag_device_ctx=="jsn-USB-to-JTAG/UART Pod V1-1234-oj1A-5ba00477-0"}
 rst -processor
-dow ./sw/hello_world_a53_1/build/hello_world_a53_1.elf
+dow $elf_a53_1
 
 targets -set -nocase -filter {name =~ "*A53*#2" && jtag_cable_name =~ "Avnet USB-to-JTAG/UART Pod V1 1234-oj1A" && jtag_device_ctx=="jsn-USB-to-JTAG/UART Pod V1-1234-oj1A-5ba00477-0"}
 rst -processor
-dow ./sw/hello_world_a53_2/build/hello_world_a53_2.elf
+dow $elf_a53_2
 # DDR keeps its contents across resets: clear the mailbox's ready word a previous run
 # left at 0x30000000 (sw/shared_mem/shared_mem.h). Otherwise A53#1, A53#2 or R5#0 could
 # see a stale MAILBOX_READY and post with stale ring counters before A53#0 clears them.

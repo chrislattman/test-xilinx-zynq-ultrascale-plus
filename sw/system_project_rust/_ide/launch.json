@@ -1,0 +1,115 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "tcf-debug",
+			"request": "launch",
+			"name": "system_project_rust_app_hw_1",
+			"debugType": "baremetal-zu",
+			"attachToRunningTargetOptions": {
+				"targetSetupMode": "standalone",
+				"executeScript": true,
+				"scriptPath": ""
+			},
+			"autoAttachProcessChildren": false,
+			"target": {
+				"targetConnectionId": "Local",
+				"peersIniPath": "../../_ide/.peers.ini",
+				"context": "ZUPlus"
+			},
+			"pathMap": [
+				{
+					"source": "/rustc/58cf8f9c35b355199727627d07ae34a4e2846d67",
+					"destination": "/home/chris/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust"
+				}
+			],
+			"targetSetup": {
+				"resetSystem": true,
+				"programDevice": true,
+				"partialBitstream": false,
+				"skipRevisionCheck": false,
+				"device": {
+					"plDevice": "Auto Detect",
+					"psDevice": "Auto Detect"
+				},
+				"enableRPUSplitMode": false,
+				"resetAPU": false,
+				"resetRPU": false,
+				"bitstreamFile": "${workspaceFolder}/system_project_rust/_ide/bitstream/design_1_wrapper.bit",
+				"zuInitialization": {
+					"isFsbl": true,
+					"usingFSBL": {
+						"initWithFSBL": true,
+						"fsblFile": "${workspaceFolder}/platform/export/platform/sw/boot/fsbl.elf",
+						"fsblExitSymbol": "XFsbl_Exit"
+					},
+					"usingPsuInit": {
+						"runPsuInit": true,
+						"plPowerup": true,
+						"psuInitTclFile": "${workspaceFolder}/system_project_rust/_ide/psinit/psu_init.tcl"
+					}
+				},
+				"zuTraceOptions": {
+					"isSelected": false,
+					"scratchAddress": "0x60000",
+					"scratchSize": "0x60000",
+					"traceOutputPath": ""
+				},
+				"downloadElf": [
+					{
+						"core": "psu_cortexr5_0",
+						"resetProcessor": true,
+						"elfFile": "${workspaceFolder}/target/armv7r-none-eabihf/debug/hello-world-r5-rs",
+						"stopAtEntry": false,
+						"isSelfRelocatingApp": false,
+						"relativeAddress": ""
+					},
+					{
+						"core": "psu_cortexa53_0",
+						"resetProcessor": true,
+						"elfFile": "${workspaceFolder}/target/aarch64-unknown-none/debug/hello-world-a53-rs",
+						"stopAtEntry": false,
+						"isSelfRelocatingApp": false,
+						"relativeAddress": ""
+					},
+					{
+						"core": "psu_cortexa53_1",
+						"resetProcessor": true,
+						"elfFile": "${workspaceFolder}/target/aarch64-unknown-none/debug/hello-world-a53-1-rs",
+						"stopAtEntry": false,
+						"isSelfRelocatingApp": false,
+						"relativeAddress": ""
+					},
+					{
+						"core": "psu_cortexa53_2",
+						"resetProcessor": true,
+						"elfFile": "${workspaceFolder}/target/aarch64-unknown-none/debug/hello-world-a53-2-rs",
+						"stopAtEntry": false,
+						"isSelfRelocatingApp": false,
+						"relativeAddress": ""
+					}
+				],
+				"crossTriggerBreakpoints": {
+					"isSelected": false,
+					"breakpoints": [
+						{
+							"crossTriggerSignalsInput": [
+								16
+							],
+							"crossTriggerSignalsOutput": [
+								0,
+								8,
+								24,
+								32,
+								40
+							],
+							"selected": true,
+							"skipOnStep": 0
+						}
+					]
+				}
+			},
+			"internalConsoleOptions": "openOnSessionStart"
+		}
+	]
+}

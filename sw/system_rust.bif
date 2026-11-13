@@ -1,0 +1,11 @@
+//arch = zynqmp; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader, destination_cpu = a53-0]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/platform/export/platform/sw/boot/fsbl.elf
+	[pmufw_image]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/platform/export/platform/sw/boot/pmufw.elf
+	[destination_device = pl]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/platform/export/platform/hw/design_1_wrapper.bit
+	[destination_cpu = a53-0, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/target/aarch64-unknown-none/release/hello-world-a53-rs
+	[destination_cpu = a53-1, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/target/aarch64-unknown-none/release/hello-world-a53-1-rs
+	[destination_cpu = a53-2, exception_level = el-3]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/target/aarch64-unknown-none/release/hello-world-a53-2-rs
+	[destination_cpu = r5-lockstep]/home/chris/test-xilinx-zynq-ultrascale-plus/sw/target/armv7r-none-eabihf/release/hello-world-r5-rs
+}
